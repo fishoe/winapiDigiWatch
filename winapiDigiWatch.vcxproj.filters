@@ -27,9 +27,15 @@
     <ClInclude Include="winapiDigiWatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fireworks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winapiDigiWatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fireworks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

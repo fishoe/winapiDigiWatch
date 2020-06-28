@@ -113,7 +113,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    return TRUE;
 }
-
+fireworks* mgr = nullptr;
 HBITMAP hbuff;
 //graphic
 void TimerProc(HWND hWnd, UINT msg, UINT_PTR nTimer, DWORD time_arg) {
@@ -156,6 +156,13 @@ void TimerProc(HWND hWnd, UINT msg, UINT_PTR nTimer, DWORD time_arg) {
     }
     oldPen = (HPEN)SelectObject(hdc, noPen);
     */
+
+
+
+    if (mgr != nullptr) {
+        mgr->draw(hWnd,hMemDC);
+    }
+
     SelectClipRgn(hMemDC, rgn);
 
     //Rectangle(hdc, 0, 0, tbox.right, tbox.bottom);
@@ -183,8 +190,12 @@ void TimerProc(HWND hWnd, UINT msg, UINT_PTR nTimer, DWORD time_arg) {
     static BOOL mscrolling = 0;
     static BOOL sscrolling = 0;
     int tick = (time_arg + 427) % 1000;
+
     //scrollup hh
-    if (m == 0 && s == 0 && tick < 20) hscrolling = 1;
+    if (m == 0 && s == 0 && tick < 20 && hscrolling == 0) {
+        hscrolling = 1;
+        //mgr->setFireWorks(200, tbox.bottom, 3, 1, 3.14 / 2, 500);
+    }
     if (hscrolling) {
         int yoff = tick / 5;
         int oldh;
@@ -200,7 +211,10 @@ void TimerProc(HWND hWnd, UINT msg, UINT_PTR nTimer, DWORD time_arg) {
     }
     TextOut(hMemDC, center.x - 60, center.y - 40, TEXT(":"), 1);
     //scrollup mm
-    if (s == 0 && tick < 20) mscrolling = 1;
+    if (s == 0 && tick < 20 && mscrolling == 0) {
+        mscrolling = 1;
+        //mgr->setFireWorks(200, tbox.bottom, 3, 1, 3.14 / 2, 500);
+    }
     if (mscrolling) {
         int yoff = tick / 5;
         int oldm;
@@ -281,11 +295,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_CREATE:
-        SetTimer(hWnd, 1, 20, (TIMERPROC)TimerProc);
+    case WM_LBUTTONDOWN:
+        mgr->setFireWorks(300, 500, 2, 0.1, 3.14 / 2, 2000);
         break;
-    case WM_TIMER:
-        
+    case WM_CREATE:
+        mgr = fireworks::getMgr(10);
+        SetTimer(hWnd, 1, 20, (TIMERPROC)TimerProc);
         break;
     case WM_PAINT:
         {

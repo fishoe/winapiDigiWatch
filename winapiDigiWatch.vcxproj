@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="fireworks.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="winapiDigiWatch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="fireworks.cpp" />
     <ClCompile Include="winapiDigiWatch.cpp" />
   </ItemGroup>
   <ItemGroup>
